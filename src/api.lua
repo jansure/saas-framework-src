@@ -9,7 +9,8 @@ function connect_redis()
     client:set_timeout(3000)
 
     local redis_info = {
-        host = "192.168.0.5",
+        --host = "192.168.0.5",
+        host = "49.4.8.123",
         port = 26379,
         db = 0,
         password = "kongbaoping@cabrtech"
@@ -75,13 +76,14 @@ if ok then
     local inpath = ngx.var.request_uri
     local http = require("resty.http")
     local httpc = http:new()
-    local res, err = httpc:request_uri("http://192.168.0.5:8083",
-        {
-            path = inpath,
-            method = inmethod,
-            headers = inheaders,
-            body = bodydata
-        })
+    --local res, err = httpc:request_uri("http://192.168.0.5:8083",
+    local res, err = httpc:request_uri("http://192.168.1.104:8083",
+            {
+                path = inpath,
+                method = inmethod,
+                headers = inheaders,
+                body = bodydata
+            })
     if res.status ~= ngx.HTTP_OK then
         ngx.exit(res.status)
     end

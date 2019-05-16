@@ -9,7 +9,8 @@ function connect_redis()
     client:set_timeout(3000)
 
     local redis_info = {
-        host = "192.168.0.5",
+        --host = "192.168.0.5",
+        host = "49.4.8.123",
         port = 26379,
         db = 0,
         password = "kongbaoping@cabrtech"

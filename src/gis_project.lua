@@ -6,8 +6,8 @@ local stringext = require('stringext')
 
 --- 函数：读取文件
 function getFile(file_name)
-    -- 以只读方式打开文件
-    local f = assert(io.open(file_name, 'r'))
+    -- 以只读方式打开文件，如果文件是二进制文件，需要加上b
+    local f = assert(io.open(file_name, 'rb'))
     -- 从当前位置读取整个文件
     local string = f:read("*a")
     -- 关闭打开的文件
@@ -26,8 +26,8 @@ if not ok then
     ngx.status = 500
     return nil, err
 end
---- 3000 seconds timeout
-tcpsock:settimeouts(30000, 30000, 30000)
+--- 设置 cosocket 的连接、发送和接收的超时时间：单位ms
+tcpsock:settimeouts(6000000, 6000000, 6000000)
 
 local bytes
 local vdata = {}

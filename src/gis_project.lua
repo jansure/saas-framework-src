@@ -178,9 +178,15 @@ elseif resp == "server_sendfile_prepare" then
 
             break
         else
+            local line, err, partial
             repeat
-                --接收数据
-                local line, err, partial = tcpsock:receive(bufsize)
+                --接收数据（若剩余数据量不够bufsize，则仅接收剩余数据量）
+                if ((filesize-receivesize) < bufsize) then
+                    line, err, partial = tcpsock:receive(filesize-receivesize)
+                else
+                    line, err, partial = tcpsock:receive(bufsize)
+                end
+
                 line = line or partial
 
                 --timeout则继续接收数据
